@@ -1,0 +1,46 @@
+---
+export interface Props {
+    direction?: "row" | "column";
+    gap?: string;
+    justify?: "center" | "start" | "end" | "space-between" | "space-around";
+    align?: "center" | "start" | "end" | "stretch";
+    class?: string;
+    clickable?: boolean;
+}
+
+const {
+    direction = "row",
+    gap = "2rem",
+    justify = "start",
+    align = "flex-start",
+    class: className = "",
+    clickable = false,
+} = Astro.props;
+---
+
+<div
+    class={`flex-container ${clickable ? 'clickable' : ''} ${className}`}
+    style={`--flex-direction: ${direction}; --gap: ${gap}; --justify: ${justify}; --align: ${align};`}
+>
+    <slot />
+</div>
+
+<style>
+    .flex-container {
+        --flex-direction: row;
+        --gap: 2rem;
+        --justify: center;
+        --align: flex-start;
+
+        display: flex;
+        flex-direction: var(--flex-direction);
+        justify-content: var(--justify);
+        align-items: var(--align);
+        gap: var(--gap);
+    }
+
+    .flex-container.clickable {
+        cursor: pointer;
+        user-select: none;
+    }
+</style>

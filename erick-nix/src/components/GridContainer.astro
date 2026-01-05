@@ -1,0 +1,33 @@
+---
+export interface Props {
+	itemWidth?: string;
+	gap?: string;
+	class?: string;
+}
+
+const {
+	itemWidth = '270px',
+	gap = '20px',
+	class: className = ''
+} = Astro.props;
+---
+
+<div
+	class={`grid-container ${className}`}
+	style={`--item-width: ${itemWidth}; --gap: ${gap};`}
+>
+	<slot />
+</div>
+
+<style>
+	.grid-container {
+		--item-width: 270px;
+		--gap: 20px;
+
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(var(--item-width), var(--item-width)));
+		gap: var(--gap);
+		width: 100%;
+		justify-content: center;
+	}
+</style>

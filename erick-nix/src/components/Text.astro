@@ -1,0 +1,67 @@
+---
+export interface Props {
+	as?: 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'label' | 'small';
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | string; // aceita px também
+	weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+	color?: string;
+	class?: string;
+}
+
+const {
+	as: Component = 'span',
+	size = 'md',
+	weight = 500,
+	color = 'inherit',
+	class: className = ''
+} = Astro.props;
+
+const sizeMap: Record<string, string> = {
+	xs: '0.75rem',    // 12px
+	sm: '0.875rem',   // 14px
+	md: '1rem',       // 16px
+	lg: '1.25rem',    // 20px
+	xl: '1.5rem',     // 24px
+	'2xl': '2rem',    // 32px
+};
+
+// Se começar com número, usa px direto. Se não, procura na escala.
+const fontSize = sizeMap[size as string] || (typeof size === 'string' && size.match(/^\d/) ? size : sizeMap['md']);
+---
+
+<Component
+	class={`text text-${size} ${className}`}
+	style={`font-size: ${fontSize}; font-weight: ${weight}; color: ${color};`}
+>
+	<slot />
+</Component>
+
+<style>
+	.text {
+		display: inline-block;
+		line-height: 1.5;
+	}
+
+	.text-xs {
+		font-size: 0.75rem;
+	}
+
+	.text-sm {
+		font-size: 0.875rem;
+	}
+
+	.text-md {
+		font-size: 1rem;
+	}
+
+	.text-lg {
+		font-size: 1.25rem;
+	}
+
+	.text-xl {
+		font-size: 1.5rem;
+	}
+
+	.text-2xl {
+		font-size: 2rem;
+	}
+</style>

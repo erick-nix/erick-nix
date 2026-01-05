@@ -1,0 +1,163 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import profileImg from "../assets/profile.svg";
+import FlexContainer from "../components/FlexContainer.astro";
+import GridContainer from "../components/GridContainer.astro";
+import PostCard from "../components/PostCard.astro";
+import profile from "../assets/profile.svg";
+import Text from "../components/Text.astro";
+
+const postsRecent = [
+  {
+    id: 1,
+    title: "NixOS resolveu o maior problema do Linux",
+    date: "16:39 | 02/01/2026",
+  },
+  {
+    id: 2,
+    title: "Configurando Neovim com Nix",
+    date: "14:20 | 01/01/2026",
+  },
+  {
+    id: 3,
+    title: "Flakes: O futuro do Nix",
+    date: "10:15 | 31/12/2025",
+  },
+  {
+    id: 4,
+    title: "Docker vs Nix: Qual é melhor?",
+    date: "09:45 | 30/12/2025",
+  },
+];
+---
+
+<Layout title="erick-nix">
+  <!-- Container externo: row com 10px de gap -->
+  <FlexContainer direction="column" gap="0px" class="main-container">
+    <FlexContainer direction="row" gap="5px" class="header">
+      <FlexContainer direction="row" gap="14px" class="settings">
+        <Image src={profileImg} class={"profile-img"} alt="Profile" width={34} height={34} />
+        <FlexContainer
+          direction="row"
+          gap="0px"
+          align="center"
+          class="buttonTheme"
+        >
+          <span class="material-symbols-rounded">contrast</span>
+        </FlexContainer>
+      </FlexContainer>
+
+      <div id="search">
+        <input type="text" placeholder="Pesquise por algum post..." />
+      </div>
+    </FlexContainer>
+
+    <FlexContainer direction="column" gap="16px" class="content">
+      <FlexContainer direction="column" gap="12px" class="about">
+        <Text
+          as="h1"
+          size="2xl"
+          color="var(--md-sys-color-on-surface)"
+          weight={400}
+        >
+          <span class="highlight">erick-nix</span>, Olá
+        </Text>
+        <Text as="p" color="var(--md-sys-color-on-surface)" weight={400}>
+          Este é meu blog pessoal que escrevo sobre alguns assuntos tech e <span
+            class="highlight-nix">nix</span
+          >.
+        </Text>
+        <Text
+          as="span"
+          size="sm"
+          color="var(--md-sys-color-outline)"
+          weight={400}>Janeiro de 2026</Text
+        >
+      </FlexContainer>
+      <FlexContainer direction="column" gap="18px" class="recentPosts">
+        <Text
+          as="h1"
+          size="lg"
+          color="var(--md-sys-color-secondary)"
+          weight={500}
+        >
+          Postagens recentes:
+        </Text>
+        <GridContainer itemWidth="270px" gap="20px">
+          {
+            postsRecent.map((post) => (
+              <PostCard title={post.title} date={post.date} />
+            ))
+          }
+        </GridContainer>
+      </FlexContainer>
+    </FlexContainer>
+  </FlexContainer>
+
+  <style is:global>
+    .header {
+      padding: 35px 14px 20px 14px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .settings {
+      width: 100%;
+    }
+
+    .buttonTheme {
+      padding: 9px;
+      border-radius: 100%;
+    }
+
+    .buttonTheme .material-symbols-rounded {
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 40px 90px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .about {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .recentPosts {
+      width: 100%;
+    }
+  </style>
+
+  <style>
+    .highlight {
+      font-weight: 700;
+    }
+
+    .highlight-nix {
+      color: #4f73bc;
+    }
+
+    .profile-img {
+      width: 34px;
+      height: 34px;
+      border-radius: 100%;
+      border: 2px solid var(--md-sys-color-surface-container);
+      object-fit: cover;
+    }
+
+    #search {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 12px;
+      border: 1px solid var(--md-sys-color-surface-container);
+      border-radius: 6px;
+    }
+
+    input {
+      font-size: 12px;
+    }
+  </style>
+</Layout>
